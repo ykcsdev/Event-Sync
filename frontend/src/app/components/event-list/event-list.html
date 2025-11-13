@@ -1,0 +1,146 @@
+<div class="container mt-5 mb-5">
+  <!-- Header Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">
+          <i class="bi bi-calendar-event"></i> Events
+        </h2>
+        <a routerLink="/events/add" class="btn btn-primary">
+          <i class="bi bi-plus-lg"></i> Create Event
+        </a>
+      </div>
+      <hr />
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3 text-muted">Loading events...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="bi bi-exclamation-circle"></i> {{ error }}
+    <button type="button" class="btn-close" (click)="loadEvents()"></button>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && events.length === 0 && !error" class="text-center py-5">
+    <div class="mb-3">
+      <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc"></i>
+    </div>
+    <h5 class="text-muted">No events yet</h5>
+    <p class="text-muted mb-3">Create your first event to get started!</p>
+    <a routerLink="/events/add" class="btn btn-primary">
+      <i class="bi bi-plus-lg"></i> Create Event
+    </a>
+  </div>
+
+  <!-- Events List - Table View (Desktop) -->
+  <div *ngIf="!loading && events.length > 0" class="d-none d-md-block">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>
+              <i class="bi bi-hash"></i> ID
+            </th>
+            <th>
+              <i class="bi bi-card-text"></i> Title
+            </th>
+            <th>
+              <i class="bi bi-file-text"></i> Description
+            </th>
+            <th>
+              <i class="bi bi-gear"></i> Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let event of events">
+            <td>
+              <span class="badge bg-info text-dark">{{ event.id }}</span>
+            </td>
+            <td>
+              <strong>{{ event.title }}</strong>
+            </td>
+            <td class="text-muted">
+              {{ event.description | slice: 0: 50 }}{{ event.description && event.description.length > 50 ? '...' : '' }}
+            </td>
+            <td class="text-center">
+              <div class="btn-group" role="group">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-info"
+                  (click)="viewSummary(event.id!)"
+                  title="View sentiment summary"
+                >
+                  <i class="bi bi-graph-up"></i> Summary
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-success"
+                  (click)="addFeedback(event.id!)"
+                  title="Submit feedback">
+                  <i class="bi bi-chat-left-quote"></i> Feedback
+                </button>
+                <!-- <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="deleteEvent(event.id!)"
+                  title="Delete event">
+                  <i class="bi-trash"> Delete</i>
+                </button> -->
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Events List - Card View (Mobile) -->
+  <div *ngIf="!loading && events.length > 0" class="d-md-none">
+    <div class="row">
+      <div *ngFor="let event of events" class="col-12 mb-3">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <h5 class="card-title mb-0">{{ event.title }}</h5>
+              <span class="badge bg-info text-dark">ID: {{ event.id }}</span>
+            </div>
+            <p class="card-text text-muted small">
+              {{ event.description | slice: 0: 80 }}{{ event.description && event.description.length > 80 ? '...' : '' }}
+            </p>
+            <div class="d-grid gap-2">
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-info"
+                (click)="viewSummary(event.id!)"
+              >
+                <i class="bi bi-graph-up"></i> View Summary
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-success"
+                (click)="addFeedback(event.id!)"
+              >
+                <i class="bi bi-chat-left-quote"></i> Add Feedback
+              </button>
+              <!-- <button
+                type="button"
+                class="btn btn-sm btn-outline-danger"
+                (click)="deleteEvent(event.id!)">
+                <i class="bi bi-trash"></i> Delete
+              </button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

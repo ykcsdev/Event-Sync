@@ -1,0 +1,93 @@
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <!-- Back Button -->
+      <button class="btn btn-outline-secondary mb-3" (click)="goBack()">
+        <i class="bi bi-arrow-left"></i> Back to Events
+      </button>
+
+      <div class="card shadow-lg">
+        <div class="card-header bg-success text-white">
+          <h4 class="mb-0">
+            <i class="bi bi-chat-left-quote"></i> Submit Feedback
+          </h4>
+        </div>
+        <div class="card-body">
+          <!-- Success Alert -->
+          <div *ngIf="success" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle"></i> Feedback submitted successfully! Redirecting...
+          </div>
+
+          <!-- Error Alert -->
+          <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-circle"></i> {{ error }}
+            <button type="button" class="btn-close" (click)="error = null"></button>
+          </div>
+
+          <!-- Event Info (if available) -->
+          <div class="alert alert-info mb-4" *ngIf="event">
+            <h6 class="mb-2">
+              <i class="bi bi-calendar-event"></i> <strong>Event:</strong>
+            </h6>
+            <p class="mb-1">
+              <strong>{{ event.title }}</strong>
+            </p>
+            <small class="text-muted">{{ event.description }}</small>
+          </div>
+
+          <!-- Feedback Form -->
+          <form (ngSubmit)="submitFeedback()" #feedbackForm="ngForm">
+            <!-- Feedback Text Area -->
+            <div class="mb-4">
+              <label for="feedback" class="form-label">
+                <strong>Your Feedback</strong>
+                <span class="text-danger">*</span>
+              </label>
+              <textarea
+                class="form-control"
+                id="feedback"
+                [(ngModel)]="feedbackText"
+                name="feedback"
+                placeholder="Share your thoughts about this event..."
+                rows="5"
+                required
+                [disabled]="loading"
+              ></textarea>
+              <!-- <small class="form-text text-muted">
+                Your honest feedback helps improve future events. Min. 1 character required.
+              </small>
+              <div *ngIf="feedbackText" class="mt-2">
+                <small class="text-muted">Character count: {{ feedbackText.length }}</small>
+              </div> -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex gap-2">
+              <button
+                type="submit"
+                class="btn btn-success flex-grow-1"
+                [disabled]="loading || !feedbackForm.valid"
+              >
+                <span *ngIf="!loading">
+                  <i class="bi bi-send"></i> Submit Feedback
+                </span>
+                <span *ngIf="loading">
+                  <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Submitting...
+                </span>
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                (click)="goBack()"
+                [disabled]="loading"
+              >
+                <i class="bi bi-x-circle"></i> Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

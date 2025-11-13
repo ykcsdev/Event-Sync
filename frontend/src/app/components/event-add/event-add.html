@@ -1,0 +1,91 @@
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">
+            <i class="bi bi-plus-circle"></i> Create New Event
+          </h4>
+        </div>
+        <div class="card-body">
+          <!-- Success Alert -->
+          <div *ngIf="success" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle"></i> Event created successfully! Redirecting...
+          </div>
+
+          <!-- Error Alert -->
+          <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-circle"></i> {{ error }}
+            <button type="button" class="btn-close" (click)="error = null"></button>
+          </div>
+
+          <!-- Form -->
+          <form (ngSubmit)="save()" #eventForm="ngForm">
+            <!-- Title Field -->
+            <div class="mb-3">
+              <label for="title" class="form-label">
+                <strong>Event Title</strong>
+                <span class="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                [(ngModel)]="event.title"
+                name="title"
+                placeholder="Enter event title"
+                required
+                [disabled]="loading"
+              />
+              
+            </div>
+
+            <!-- Description Field -->
+            <div class="mb-4">
+              <label for="description" class="form-label">
+                <strong>Description</strong>
+                <span class="text-danger">*</span>
+              </label>
+              <textarea
+                class="form-control"
+                id="description"
+                [(ngModel)]="event.description"
+                name="description"
+                placeholder="Enter event description"
+                rows="4"
+                required
+                [disabled]="loading"
+              ></textarea>
+              <small class="form-text text-muted">Provide details about your event</small>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex gap-2">
+              <button
+                type="submit"
+                class="btn btn-primary flex-grow-1"
+                [disabled]="loading || !eventForm.valid"
+              >
+                <span *ngIf="!loading">
+                  <i class="bi bi-save"></i> Create Event
+                </span>
+                <span *ngIf="loading">
+                  <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Creating...
+                </span>
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                (click)="cancel()"
+                [disabled]="loading"
+              >
+                <i class="bi bi-x-circle"></i> Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
