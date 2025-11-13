@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  springboot:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: springboot-container
+    env_file:
+      - ./backend/eventsync.env
+    ports:
+      - "8080:8080"
+
+  angular:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: angular-container
+    depends_on:
+      - springboot
+    ports:
+      - "80:80"
