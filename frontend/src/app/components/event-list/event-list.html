@@ -25,7 +25,7 @@
   <!-- Error State -->
   <div *ngIf="error && !loading" class="alert alert-danger alert-dismissible fade show" role="alert">
     <i class="bi bi-exclamation-circle"></i> {{ error }}
-    <button type="button" class="btn-close" (click)="loadEvents()"></button>
+    <button type="button" class="btn-close" (click)="loadEvents()">Try again!</button>
   </div>
 
   <!-- Empty State -->
@@ -73,20 +73,21 @@
             </td>
             <td class="text-center">
               <div class="btn-group" role="group">
-                <button
-                  type="button"
-                  class="btn btn-sm btn-outline-info"
-                  (click)="viewSummary(event.id!)"
-                  title="View sentiment summary"
-                >
-                  <i class="bi bi-graph-up"></i> Summary
-                </button>
+                
                 <button
                   type="button"
                   class="btn btn-sm btn-outline-success"
                   (click)="addFeedback(event.id!)"
                   title="Submit feedback">
                   <i class="bi bi-chat-left-quote"></i> Feedback
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-info"
+                  (click)="viewSummary(event.id!)"
+                  title="View sentiment summary">
+                  <i class="bi bi-graph-up"></i> Summary
                 </button>
                 <!-- <button
                   type="button"
