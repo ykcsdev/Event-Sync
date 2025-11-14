@@ -1,6 +1,6 @@
 # SpringBoot+Angular Project integrated with Sentiment Analysis
 
-This application is an Java fullstack application w
+A fullstack Java application which uses AI model and services
 
 ## Overview
 
